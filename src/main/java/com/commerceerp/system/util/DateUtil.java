@@ -95,4 +95,40 @@ public class DateUtil {
         return lastDayOfMonth;
     }
 
+    /**
+     * 字符串时间转Date类型
+     */
+    public static Date getStringToDateTime(String strDate){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            return sdf.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 字符串时间转Calendar
+     */
+    public static Calendar getCalendarToStringTime(String strTime){
+
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date = null;
+        try {
+            date = sdf.parse(strTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(date);
+
+        return calendar;
+    }
+
 }
