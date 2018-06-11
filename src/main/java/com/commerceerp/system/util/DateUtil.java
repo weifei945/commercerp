@@ -131,4 +131,11 @@ public class DateUtil {
         return calendar;
     }
 
+    //获取YYYY-MM-DD HH:mm:ss的当前时间
+    public static String getYMDHMSDate() {
+        Date Date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(Date).trim();
+    }
+
 }

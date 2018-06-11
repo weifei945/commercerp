@@ -8,9 +8,8 @@ public class GoodInfo {
 
     private String goodPlatformName;
 
-    private String goodSystemId;
 
-    private String goodSystemNnname;
+    private String goodSystemEnname;
 
     private String goodSystemChname;
 
@@ -30,9 +29,30 @@ public class GoodInfo {
 
     private String goodState;
 
+
     private String goodWeight;
 
     private String goodSize;
+
+    private String goodPlatformSku;
+
+    private String goodSystemSku;
+
+    public String getGoodPlatformSku() {
+        return goodPlatformSku;
+    }
+
+    public void setGoodPlatformSku(String goodPlatformSku) {
+        this.goodPlatformSku = goodPlatformSku;
+    }
+
+    public String getGoodSystemSku() {
+        return goodSystemSku;
+    }
+
+    public void setGoodSystemSku(String goodSystemSku) {
+        this.goodSystemSku = goodSystemSku;
+    }
 
     public String getGoodId() {
         return goodId;
@@ -58,20 +78,13 @@ public class GoodInfo {
         this.goodPlatformName = goodPlatformName;
     }
 
-    public String getGoodSystemId() {
-        return goodSystemId;
+
+    public String getGoodSystemEnname() {
+        return goodSystemEnname;
     }
 
-    public void setGoodSystemId(String goodSystemId) {
-        this.goodSystemId = goodSystemId;
-    }
-
-    public String getGoodSystemNnname() {
-        return goodSystemNnname;
-    }
-
-    public void setGoodSystemNnname(String goodSystemNnname) {
-        this.goodSystemNnname = goodSystemNnname;
+    public void setGoodSystemEnname(String goodSystemEnname) {
+        this.goodSystemEnname = goodSystemEnname;
     }
 
     public String getGoodSystemChname() {

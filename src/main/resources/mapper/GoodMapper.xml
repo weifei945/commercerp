@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.commerceerp.system.mapper.GoodMapper">
+    <resultMap id="BaseResultMap" type="com.commerceerp.system.entity.GoodInfo">
+        <id column="good_id" property="goodId" jdbcType="VARCHAR"/>
+        <result column="good_platform_id" property="goodPlatformId" jdbcType="VARCHAR"/>
+        <result column="good_platform_name" property="goodPlatformName" jdbcType="VARCHAR"/>
+        <result column="good_system_enname" property="goodSystemEnname" jdbcType="VARCHAR"/>
+        <result column="good_system_chname" property="goodSystemChname" jdbcType="VARCHAR"/>
+        <result column="good_storehouse_id" property="goodStorehouseId" jdbcType="DOUBLE"/>
+        <result column="good_sell_type" property="goodSellType" jdbcType="VARCHAR"/>
+        <result column="good_class" property="goodClass" jdbcType="VARCHAR"/>
+        <result column="good_create_time" property="goodCreateTime" jdbcType="VARCHAR"/>
+        <result column="good_upd_time" property="goodUpdTime" jdbcType="VARCHAR"/>
+        <result column="good_purchase_price" property="goodPurchasePrice" jdbcType="INTEGER"/>
+        <result column="good_state" property="goodState" jdbcType="INTEGER"/>
+        <result column="good_weight" property="goodWeight" jdbcType="INTEGER"/>
+        <result column="good_size" property="goodSize" jdbcType="VARCHAR"/>
+        <result column="good_platform_sku" property="goodPlatformSku" jdbcType="VARCHAR"/>
+        <result column="good_system_sku" property="goodSystemSku" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="GoodInfoMap" type="java.util.HashMap">
+        <id column="good_id" property="goodId" jdbcType="VARCHAR"/>
+        <result column="good_platform_id" property="goodPlatformId" jdbcType="VARCHAR"/>
+        <result column="good_platform_name" property="goodPlatformName" jdbcType="VARCHAR"/>
+        <result column="good_system_enname" property="goodSystemEnname" jdbcType="VARCHAR"/>
+        <result column="good_system_chname" property="goodSystemChname" jdbcType="VARCHAR"/>
+        <result column="good_storehouse_id" property="goodStorehouseId" jdbcType="DOUBLE"/>
+        <result column="good_sell_type" property="goodSellType" jdbcType="VARCHAR"/>
+        <result column="good_class" property="goodClass" jdbcType="VARCHAR"/>
+        <result column="good_create_time" property="goodCreateTime" jdbcType="VARCHAR"/>
+        <result column="good_upd_time" property="goodUpdTime" jdbcType="VARCHAR"/>
+        <result column="good_purchase_price" property="goodPurchasePrice" jdbcType="INTEGER"/>
+        <result column="good_state" property="goodState" jdbcType="INTEGER"/>
+        <result column="good_weight" property="goodWeight" jdbcType="INTEGER"/>
+        <result column="good_size" property="goodSize" jdbcType="VARCHAR"/>
+        <result column="good_sku" property="goodSku" jdbcType="VARCHAR"/>
+        <result column="good_platform_sku" property="goodPlatformSku" jdbcType="VARCHAR"/>
+        <result column="good_system_sku" property="goodSystemSku" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       good_id,good_platform_id,good_platform_name,good_system_enname,good_system_chname,good_storehouse_id,good_sell_type,good_class,good_create_time,
+       good_upd_time,good_purchase_price,good_state,good_weight,good_size,good_platform_sku,good_system_sku
+    </sql>
+
+    <sql id="Base_Column_List_gi">
+        gi.good_id,gi.good_platform_id,gi.good_platform_name,gi.good_system_enname,gi.good_system_chname,gi.good_storehouse_id,gi.good_sell_type,gi.good_class,gi.good_create_time,
+        gi.good_upd_time,gi.good_purchase_price,gi.good_state,gi.good_weight,gi.good_size,good_platform_sku,good_system_sku
+    </sql>
+    
+    <select id="getAllSystemGood" parameterType="map" resultMap="GoodInfoMap">
+
+        select <include refid="Base_Column_List_gi"/>,sn.storehouse_name from good_info gi
+
+        LEFT JOIN storehouse_info sn ON gi.good_storehouse_id = sn.storehouse_id
+
+        where 1=1
+
+        <if test="goodSku != null and goodSku != '' ">
+            AND good_sku = #{goodSku}
+        </if>
+
+        <if test="goodSystemChname != null and goodSystemChname != '' ">
+            AND good_system_chname = #{goodSystemChname}
+        </if>
+
+        <if test="goodClass != null and goodClass != '' ">
+            AND good_class = #{goodClass}
+        </if>
+
+        <if test="goodSellType != null and goodSellType != '' ">
+            AND good_sell_type = #{goodSellType}
+        </if>
+
+        ORDER BY
+
+        <choose>
+            <when test="(goodCreateTimePX == null or goodCreateTimePX == '') and (goodUpdTimePX == null or goodUpdTimepX == '') and (goodPurchasePricePX == null or goodPurchasePricePX == '') ">
+                good_create_time DESC
+            </when>
+
+            <!-- 按照创建时间排序 1：升序 2：降序 -->
+
+            <when test="goodCreateTimePX == 2 ">
+                good_create_time DESC
+            </when>
+
+            <when test="goodCreateTimePX == 1 ">
+                good_create_time ASC
+            </when>
+
+            <!-- 按照更新时间排序 1：升序 2：降序 -->
+
+            <when test="goodUpdTimePX == 2 ">
+                good_upd_time DESC
+            </when>
+
+            <when test="goodUpdTimePX == 1 ">
+                good_upd_time ASC
+            </when>
+
+            <!-- 按照商品金额排序 1：升序 2：降序 -->
+
+            <when test="goodPurchasePricePX == 2 ">
+                good_purchase_price DESC
+            </when>
+
+            <when test="goodPurchasePricePX == 1 ">
+                good_purchase_price ASC
+            </when>
+
+        </choose>
+
+
+    </select>
+
+    <insert id="saveNewSystemGood" parameterType="com.commerceerp.system.entity.GoodInfo">
+
+        INSERT INTO good_info
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">
+                good_id,
+            </if>
+            <if test="goodPlatformId != null">
+                good_platform_id,
+            </if>
+            <if test="goodPlatformName != null">
+                good_platform_name,
+            </if>
+            <if test="goodSystemEnname != null">
+                good_system_enname,
+            </if>
+            <if test="goodSystemChname != null">
+                good_system_chname,
+            </if>
+            <if test="goodPicPath != null">
+                good_pic_path,
+            </if>
+            <if test="goodStorehouseId != null">
+                good_storehouse_id,
+            </if>
+            <if test="goodSellType != null">
+                good_sell_type,
+            </if>
+            <if test="goodClass != null">
+                good_class,
+            </if>
+            <if test="goodCreateTime != null">
+                good_create_time,
+            </if>
+            <if test="goodUpdTime != null">
+                good_upd_time,
+            </if>
+            <if test="goodPurchasePrice != null">
+                good_purchase_price,
+            </if>
+            <if test="goodState != null">
+                good_state,
+            </if>
+            <if test="goodWeight != null">
+                good_weight,
+            </if>
+
+            <if test="goodSize != null">
+                good_size,
+            </if>
+            <if test="goodPlatformSku != null">
+                good_platform_sku,
+            </if>
+            <if test="goodSystemSku != null">
+                good_system_sku,
+            </if>
+
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">
+                #{goodId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodPlatformId != null">
+                #{goodPlatformId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodPlatformName != null">
+                #{goodPlatformName,jdbcType=VARCHAR},
+            </if>
+            <if test="goodSystemEnname != null">
+                #{goodSystemEnname,jdbcType=VARCHAR},
+            </if>
+            <if test="goodSystemChname != null">
+                #{goodSystemChname,jdbcType=VARCHAR},
+            </if>
+            <if test="goodPicPath != null">
+                #{goodPicPath,jdbcType=VARCHAR},
+            </if>
+            <if test="goodStorehouseId != null">
+                #{goodStorehouseId,jdbcType=VARCHAR},
+            </if>
+            <if test="goodSellType != null">
+                #{goodSellType,jdbcType=VARCHAR},
+            </if>
+            <if test="goodClass != null">
+                #{goodClass,jdbcType=VARCHAR},
+            </if>
+            <if test="goodCreateTime != null">
+                #{goodCreateTime,jdbcType=INTEGER},
+            </if>
+            <if test="goodUpdTime != null">
+                #{goodUpdTime,jdbcType=INTEGER},
+            </if>
+            <if test="goodPurchasePrice != null">
+                #{goodPurchasePrice,jdbcType=DOUBLE},
+            </if>
+            <if test="goodState != null">
+                #{goodState,jdbcType=VARCHAR},
+            </if>
+            <if test="goodWeight != null">
+                #{goodWeight,jdbcType=VARCHAR},
+            </if>
+            <if test="goodSize != null">
+                #{goodSize,jdbcType=VARCHAR},
+            </if>
+            <if test="goodPlatformSku != null">
+                #{goodPlatformSku,jdbcType=VARCHAR},
+            </if>
+            <if test="goodSystemSku != null">
+                #{goodSystemSku,jdbcType=VARCHAR},
+            </if>
+
+
+        </trim>
+
+    </insert>
+
+
+</mapper>
