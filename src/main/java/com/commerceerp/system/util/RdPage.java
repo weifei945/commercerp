@@ -1,8 +1,11 @@
 package com.commerceerp.system.util;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Map;
 
 /**
  * 分页Model
@@ -143,5 +146,15 @@ public class RdPage {
 	 */
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public static  RdPage getPageInfo(PageInfo<Map> pageInfo, String current, String pageSize){
+		//分页信息
+		RdPage rdPage = new RdPage();
+		rdPage.setTotal(pageInfo.getTotal());
+		rdPage.setPages(pageInfo.getPages());
+		rdPage.setCurrent(Integer.valueOf(current));
+		rdPage.setPageSize(Integer.valueOf(pageSize));
+		return rdPage;
 	}
 }

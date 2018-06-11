@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.commerceerp.system.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.commerceerp.system.entity.OrderInfo">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="order_channel" property="orderChannel" jdbcType="VARCHAR"/>
+        <result column="order_store_id" property="orderStoreId" jdbcType="VARCHAR"/>
+        <result column="order_sku" property="orderSku" jdbcType="VARCHAR"/>
+        <result column="order_good_id" property="orderGoodId" jdbcType="VARCHAR"/>
+        <result column="order_money" property="orderMoney" jdbcType="DOUBLE"/>
+        <result column="order_down_time" property="orderDownTime" jdbcType="VARCHAR"/>
+        <result column="order_pay_time" property="orderPayTime" jdbcType="VARCHAR"/>
+        <result column="order_logistic_id" property="orderLogisticsId" jdbcType="VARCHAR"/>
+        <result column="order_remark" property="orderRemark" jdbcType="VARCHAR"/>
+        <result column="order_seller_id" property="orderSellerId" jdbcType="INTEGER"/>
+        <result column="order_buyer_id" property="orderBuyerId" jdbcType="INTEGER"/>
+        <result column="order_good_number" property="orderGoodNumber" jdbcType="INTEGER"/>
+        <result column="address_recipients" property="addressRecipients" jdbcType="VARCHAR"/>
+        <result column="address_location_a" property="addressLocationA" jdbcType="INTEGER"/>
+        <result column="address_location_b" property="addressLocationB" jdbcType="VARCHAR"/>
+        <result column="address_city" property="addressCity" jdbcType="VARCHAR"/>
+        <result column="address_province" property="addressProvince" jdbcType="VARCHAR"/>
+        <result column="address_country" property="addressCountry" jdbcType="VARCHAR"/>
+        <result column="address_postcode" property="addressPostcode" jdbcType="INTEGER"/>
+        <result column="address_phone" property="addressPhone" jdbcType="INTEGER"/>
+        <result column="address_remark" property="addressRemark" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="OrderInfoMap" type="java.util.HashMap">
+        <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="order_status" property="orderStatus" jdbcType="VARCHAR"/>
+        <result column="order_channel" property="orderChannel" jdbcType="VARCHAR"/>
+        <result column="order_store_id" property="orderStoreId" jdbcType="VARCHAR"/>
+        <result column="order_good_id" property="orderGoodId" jdbcType="VARCHAR"/>
+        <result column="order_sku" property="orderSku" jdbcType="VARCHAR"/>
+        <result column="order_money" property="orderMoney" jdbcType="DOUBLE"/>
+        <result column="order_down_time" property="orderDownTime" jdbcType="VARCHAR"/>
+        <result column="order_pay_time" property="orderPayTime" jdbcType="VARCHAR"/>
+        <result column="order_logistic_id" property="orderLogisticsId" jdbcType="VARCHAR"/>
+        <result column="order_remark" property="orderRemark" jdbcType="VARCHAR"/>
+        <result column="order_seller_id" property="orderSellerId" jdbcType="INTEGER"/>
+        <result column="order_buyer_id" property="orderBuyerId" jdbcType="INTEGER"/>
+        <result column="order_good_number" property="orderGoodNumber" jdbcType="INTEGER"/>
+        <result column="address_recipients" property="addressRecipients" jdbcType="VARCHAR"/>
+        <result column="address_location_a" property="addressLocationA" jdbcType="INTEGER"/>
+        <result column="address_location_b" property="addressLocationB" jdbcType="VARCHAR"/>
+        <result column="address_city" property="addressCity" jdbcType="VARCHAR"/>
+        <result column="address_province" property="addressProvince" jdbcType="VARCHAR"/>
+        <result column="address_country" property="addressCountry" jdbcType="VARCHAR"/>
+        <result column="address_postcode" property="addressPostcode" jdbcType="INTEGER"/>
+        <result column="address_phone" property="addressPhone" jdbcType="INTEGER"/>
+        <result column="address_remark" property="addressRemark" jdbcType="INTEGER"/>
+        <result column="store_name" property="storeName" jdbcType="VARCHAR"/>
+        <result column="good_platform_name" property="goodPlatformName" jdbcType="VARCHAR"/>
+        <result column="logistic_name" property="logisticName" jdbcType="VARCHAR"/>
+        <result column="logistic_phone" property="logisticPhone" jdbcType="VARCHAR"/>
+        <result column="seller_name" property="sellerName" jdbcType="VARCHAR"/>
+        <result column="buyer_name" property="buyerName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       order_id,order_status,order_channel,order_store_id,order_sku,order_good_id,order_money,order_down_time,order_pay_time,order_logistic_id,
+       order_remark,order_seller_id,order_buyer_id,order_good_number,address_recipients,address_location_a,address_location_b,address_city,
+       address_province,address_country,address_postcode,address_phone,address_remark
+    </sql>
+
+    <sql id="Base_Column_List_oi">
+        oi.order_id,oi.order_status,oi.order_channel,oi.order_store_id,oi.order_sku,oi.order_good_id,oi.order_money,oi.order_down_time,oi.order_pay_time,oi.order_logistic_id,
+        oi.order_remark,oi.order_seller_id,oi.order_buyer_id,oi.order_good_number,oi.address_recipients,oi.address_location_a,oi.address_location_b,oi.address_city,
+        oi.address_province,oi.address_country,oi.address_postcode,oi.address_phone,oi.address_remark
+    </sql>
+    
+    <select id="getAllOrderInfo" parameterType="map" resultMap="OrderInfoMap">
+        select <include refid="Base_Column_List_oi"/>,si.store_name,gi.good_platform_name,li.logistic_name,li.logistic_phone,sei.seller_name,bui.buyer_name from order_info oi
+        LEFT JOIN store_info si ON oi.order_store_id = si.store_id
+
+        LEFT JOIN good_info gi ON oi.order_good_id = gi.good_id
+
+        LEFT JOIN logistic_info li ON  oi.order_logistic_id = li.logistic_id
+
+        LEFT JOIN seller_info sei ON oi.order_seller_id = sei.seller_id
+
+        LEFT JOIN buyer_info bui ON oi.order_buyer_id = bui.buyer_id
+
+        where 1=1
+
+        <if test="orderChannel != null and orderChannel != '' ">
+            AND order_channel = #{orderChannel}
+        </if>
+
+        <if test="storeName != null and storeName != '' ">
+            AND store_name = #{storeName}
+        </if>
+
+        <if test="addressCountry != null and addressCountry != '' ">
+            AND address_country = #{addressCountry}
+        </if>
+
+        <if test="orderStatus != null and orderStatus != '' ">
+            AND order_status = #{orderStatus}
+        </if>
+
+        ORDER BY
+
+        <choose>
+            <when test="(orderDownTimePX == null or orderDownTimePX == '') and (orderSkuPX == null or orderSkuPX == '') and (orderMoneyPX == null or orderMoneyPX == '') ">
+                order_down_time DESC
+            </when>
+
+            <!-- 按照下单时间排序 1：升序 2：降序 -->
+
+            <when test="orderDownTimePX == 2 ">
+                order_down_time DESC
+            </when>
+
+            <when test="orderDownTimePX == 1 ">
+                order_down_time ASC
+            </when>
+
+            <!-- 按照产品sku排序 1：升序 2：降序 -->
+
+            <when test="orderSkuPX == 2 ">
+                order_sku DESC
+            </when>
+
+            <when test="orderSkuPX == 1 ">
+                order_sku ASC
+            </when>
+
+            <!-- 按照订单金额排序 1：升序 2：降序 -->
+
+            <when test="orderMoneyPX == 2 ">
+                order_money DESC
+            </when>
+
+            <when test="orderMoneyPX == 1 ">
+                order_money ASC
+            </when>
+
+        </choose>
+
+
+    </select>
+
+
+</mapper>
