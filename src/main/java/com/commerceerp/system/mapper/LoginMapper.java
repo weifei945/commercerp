@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * Created by tangyong on 2018/3/10.
  */
-public interface LoginMapper extends Mapper{
+public interface LoginMapper extends Mapper {
 
     //查询用户
     SysUser getUser(@Param("loginname") String loginname, @Param("password") String password);
@@ -18,4 +18,5 @@ public interface LoginMapper extends Mapper{
     //修改密码
     Integer updatePwd(SysUser user);
 
+    Integer saveToken(@Param("code") String code, @Param("id") String id);
 }
