@@ -14,13 +14,23 @@ public class GoodStorehouseInfo {
 
     private Integer gsResidueNumber;
 
-    private String gsStorehouseType;
+    private String gsStorehouseId;
 
     private String gsUpdTime;
 
     private Double gsGoodPrice;
 
     private String gsRemark;
+
+    private String gsGoodId;
+
+    public String getGsGoodId() {
+        return gsGoodId;
+    }
+
+    public void setGsGoodId(String gsGoodId) {
+        this.gsGoodId = gsGoodId;
+    }
 
     public String getGsId() {
         return gsId;
@@ -70,12 +80,12 @@ public class GoodStorehouseInfo {
         this.gsResidueNumber = gsResidueNumber;
     }
 
-    public String getGsStorehouseType() {
-        return gsStorehouseType;
+    public String getGsStorehouseId() {
+        return gsStorehouseId;
     }
 
-    public void setGsStorehouseType(String gsStorehouseType) {
-        this.gsStorehouseType = gsStorehouseType;
+    public void setGsStorehouseId(String gsStorehouseId) {
+        this.gsStorehouseId = gsStorehouseId;
     }
 
     public String getGsUpdTime() {

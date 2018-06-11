@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.commerceerp.system.mapper.StorehouseMapper">
+    <resultMap id="BaseResultMap" type="com.commerceerp.system.entity.StorehouseInfo">
+        <id column="storehouse_id" property="storehouseId" jdbcType="VARCHAR"/>
+        <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR"/>
+        <result column="storehouse_responsible_man" property="storehouseResponsibleMan" jdbcType="INTEGER"/>
+        <result column="storehouse_phone" property="storehousePhone" jdbcType="INTEGER"/>
+        <result column="storehouse_qq" property="storehouseQq" jdbcType="INTEGER"/>
+        <result column="storehouse_email" property="storehouseEmail" jdbcType="INTEGER"/>
+        <result column="storehouse_postcode" property="storehousePostcode" jdbcType="VARCHAR"/>
+        <result column="storehouse_province" property="storehouseProvince" jdbcType="VARCHAR"/>
+        <result column="storehouse_city" property="storehouseCity" jdbcType="DOUBLE"/>
+        <result column="storehouse_area" property="storehouseArea" jdbcType="VARCHAR"/>
+        <result column="storehouse_detail_address" property="storehouseetail_address" jdbcType="VARCHAR"/>
+        <result column="storehouse_remark" property="storehouseRemark" jdbcType="VARCHAR"/>
+        <result column="storehouse_isdefault" property="storehouseIsdefault" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="StorehouseInfoMap" type="java.util.HashMap">
+        <id column="storehouse_id" property="storehouseId" jdbcType="VARCHAR"/>
+        <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR"/>
+        <result column="storehouse_responsible_man" property="storehouseResponsibleMan" jdbcType="INTEGER"/>
+        <result column="storehouse_phone" property="storehousePhone" jdbcType="INTEGER"/>
+        <result column="storehouse_qq" property="storehouseQq" jdbcType="INTEGER"/>
+        <result column="storehouse_email" property="storehouseEmail" jdbcType="INTEGER"/>
+        <result column="storehouse_postcode" property="storehousePostcode" jdbcType="VARCHAR"/>
+        <result column="storehouse_province" property="storehouseProvince" jdbcType="VARCHAR"/>
+        <result column="storehouse_city" property="storehouseCity" jdbcType="DOUBLE"/>
+        <result column="storehouse_area" property="storehouseArea" jdbcType="VARCHAR"/>
+        <result column="storehouse_detail_address" property="storehouseetail_address" jdbcType="VARCHAR"/>
+        <result column="storehouse_remark" property="storehouseRemark" jdbcType="VARCHAR"/>
+        <result column="storehouse_isdefault" property="storehouseIsdefault" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       storehouse_id,storehouse_name,storehouse_responsible_man,storehouse_qq,storehouse_email,storehouse_postcode,storehouse_province,storehouse_city,storehouse_area,
+       storehouse_detail_address,storehouse_remark,storehouse_isdefault
+    </sql>
+
+    <sql id="Base_Column_List_si">
+       si.storehouse_id,si.storehouse_name,si.storehouse_responsible_man,si.storehouse_qq,si.storehouse_email,si.storehouse_postcode,si.storehouse_province,si.storehouse_city,si.storehouse_area,
+       si.storehouse_detail_address,si.storehouse_remark,si.storehouse_isdefault
+    </sql>
+    
+    <select id="getAllStorehouseInfo" parameterType="map" resultMap="BaseResultMap">
+
+        select <include refid="Base_Column_List"/> from storehouse_info
+
+    </select>
+
+    <insert id="saveNewStorehouseInfo" parameterType="com.commerceerp.system.entity.StorehouseInfo" >
+
+        INSERT INTO storehouse_info
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="storehouseId != null">
+                storehouse_id,
+            </if>
+            <if test="storehouseName != null">
+                storehouse_name,
+            </if>
+            <if test="storehouseResponsibleMan != null">
+                storehouse_responsible_man,
+            </if>
+            <if test="storehousePhone != null">
+                storehouse_phone,
+            </if>
+            <if test="storehouseQq != null">
+                storehouse_qq,
+            </if>
+            <if test="storehouseEmail != null">
+                storehouse_email,
+            </if>
+            <if test="storehousePostcode != null">
+                storehouse_postcode,
+            </if>
+            <if test="storehouseProvince != null">
+                storehouse_province,
+            </if>
+            <if test="storehouseCity != null">
+                storehouse_city,
+            </if>
+            <if test="storehouseArea != null">
+                storehouse_area,
+            </if>
+            <if test="storehouseDetailAddress != null">
+                storehouse_detail_address,
+            </if>
+            <if test="storehouseRemark != null">
+                storehouse_remark,
+            </if>
+            <if test="storehouseIsdefault != null">
+                storehouse_isdefault,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="storehouseId != null">
+            #{storehouseId,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseName != null">
+            #{storehouseName,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseResponsibleMan != null">
+            #{storehouseResponsibleMan,jdbcType=VARCHAR},
+        </if>
+        <if test="storehousePhone != null">
+            #{storehousePhone,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseQq != null">
+            #{storehouseQq,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseEmail != null">
+            #{storehouseEmail,jdbcType=VARCHAR},
+        </if>
+        <if test="storehousePostcode != null">
+            #{storehousePostcode,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseProvince != null">
+            #{storehouseProvince,jdbcType=VARCHAR},
+        </if>
+
+        <if test="storehouseCity != null">
+            #{storehouseCity,jdbcType=INTEGER},
+        </if>
+        <if test="storehouseArea != null">
+            #{storehouseArea,jdbcType=INTEGER},
+        </if>
+        <if test="storehouseDetailAddress != null">
+            #{storehouseDetailAddress,jdbcType=DOUBLE},
+        </if>
+        <if test="storehouseRemark != null">
+            #{storehouseRemark,jdbcType=VARCHAR},
+        </if>
+        <if test="storehouseIsdefault != null">
+            #{storehouseIsdefault,jdbcType=VARCHAR},
+        </if>
+
+        </trim>
+
+    </insert>
+
+</mapper>

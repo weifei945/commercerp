@@ -6,11 +6,11 @@ public class StorehouseInfo {
 
     private String storehouseName;
 
-    private String storehouseResposibleMan;
+    private String storehouseResponsibleMan;
 
     private String storehousePhone;
 
-    private String storehouseQQ;
+    private String storehouseQq;
 
     private String storehouseEmail;
 
@@ -23,6 +23,26 @@ public class StorehouseInfo {
     private String storehouseDetailAddress;
 
     private String storehouseRemark;
+
+    private String storehouseIsdefault;
+
+    private String storehousePostcode;
+
+    public String getStorehousePostcode() {
+        return storehousePostcode;
+    }
+
+    public void setStorehousePostcode(String storehousePostcode) {
+        this.storehousePostcode = storehousePostcode;
+    }
+
+    public String getStorehouseIsdefault() {
+        return storehouseIsdefault;
+    }
+
+    public void setStorehouseIsdefault(String storehouseIsdefault) {
+        this.storehouseIsdefault = storehouseIsdefault;
+    }
 
     public String getStorehouseId() {
         return storehouseId;
@@ -40,12 +60,12 @@ public class StorehouseInfo {
         this.storehouseName = storehouseName;
     }
 
-    public String getStorehouseResposibleMan() {
-        return storehouseResposibleMan;
+    public String getStorehouseResponsibleMan() {
+        return storehouseResponsibleMan;
     }
 
-    public void setStorehouseResposibleMan(String storehouseResposibleMan) {
-        this.storehouseResposibleMan = storehouseResposibleMan;
+    public void setStorehouseResponsibleMan(String storehouseResponsibleMan) {
+        this.storehouseResponsibleMan = storehouseResponsibleMan;
     }
 
     public String getStorehousePhone() {
@@ -56,12 +76,12 @@ public class StorehouseInfo {
         this.storehousePhone = storehousePhone;
     }
 
-    public String getStorehouseQQ() {
-        return storehouseQQ;
+    public String getStorehouseQq() {
+        return storehouseQq;
     }
 
-    public void setStorehouseQQ(String storehouseQQ) {
-        this.storehouseQQ = storehouseQQ;
+    public void setStorehouseQq(String storehouseQq) {
+        this.storehouseQq = storehouseQq;
     }
 
     public String getStorehouseEmail() {

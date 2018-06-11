@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.commerceerp.system.mapper.GoodStorehouseMapper">
+    <resultMap id="BaseResultMap" type="com.commerceerp.system.entity.GoodStorehouseInfo">
+        <id column="gs_id" property="gsId" jdbcType="VARCHAR"/>
+        <result column="gs_all_number" property="gsAllNumber" jdbcType="VARCHAR"/>
+        <result column="gs_safe_number" property="gsSafeNumber" jdbcType="INTEGER"/>
+        <result column="gs_buying_number" property="gsBuyingNumber" jdbcType="INTEGER"/>
+        <result column="gs_selling_number" property="gsSellingNumber" jdbcType="INTEGER"/>
+        <result column="gs_residue_number" property="gsResidueNumber" jdbcType="INTEGER"/>
+        <result column="gs_storehouse_id" property="gsStorehouseId" jdbcType="VARCHAR"/>
+        <result column="gs_upd_time" property="gsUpdTime" jdbcType="VARCHAR"/>
+        <result column="gs_good_price" property="gsGoodPrice" jdbcType="DOUBLE"/>
+        <result column="gs_remark" property="gsRemark" jdbcType="VARCHAR"/>
+        <result column="gs_good_id" property="gsGoodId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="GoodStorehouseInfoMap" type="java.util.HashMap">
+        <id column="gs_id" property="gsId" jdbcType="VARCHAR"/>
+        <result column="gs_all_number" property="gsAllNumber" jdbcType="VARCHAR"/>
+        <result column="gs_safe_number" property="gsSafeNumber" jdbcType="INTEGER"/>
+        <result column="gs_buying_number" property="gsBuyingNumber" jdbcType="INTEGER"/>
+        <result column="gs_selling_number" property="gsSellingNumber" jdbcType="INTEGER"/>
+        <result column="gs_residue_number" property="gsResidueNumber" jdbcType="INTEGER"/>
+        <result column="gs_storehouse_id" property="gsStorehouseId" jdbcType="VARCHAR"/>
+        <result column="gs_upd_time" property="gsUpdTime" jdbcType="VARCHAR"/>
+        <result column="gs_good_price" property="gsGoodPrice" jdbcType="DOUBLE"/>
+        <result column="gs_remark" property="gsRemark" jdbcType="VARCHAR"/>
+        <result column="gs_good_id" property="gsGoodId" jdbcType="VARCHAR"/>
+        <result column="storehouse_name" property="storehouseName" jdbcType="VARCHAR"/>
+        <result column="good_system_chname" property="goodSystemChname" jdbcType="VARCHAR"/>
+        <result column="good_class" property="goodClass" jdbcType="VARCHAR"/>
+        <result column="good_system_sku" property="goodSystemSku" jdbcType="VARCHAR"/>
+        <result column="good_sell_type" property="goodSellType" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+       gs_id,gs_all_number,gs_safe_number,gs_buying_number,gs_selling_number,gs_residue_number,gs_storehouse_id,gs_upd_time,gs_good_price,
+       gs_remark,gs_good_id
+    </sql>
+
+    <sql id="Base_Column_List_gsi">
+        gsi.gs_id,gsi.gs_all_number,gsi.gs_safe_number,gsi.gs_buying_number,gsi.gs_selling_number,gsi.gs_residue_number,gsi.gs_storehouse_id,gsi.gs_upd_time,gsi.gs_good_price,
+        gsi.gs_remark,gsi.gs_good_id
+    </sql>
+    
+    <select id="getAllGoodStorehouseInfo" parameterType="map" resultMap="GoodStorehouseInfoMap">
+
+        select <include refid="Base_Column_List_gsi"/>,sn.storehouse_name,gi.good_system_chname,gi.good_class,gi.good_system_sku,gi.good_sell_type from good_storehouse_info gsi
+
+        LEFT JOIN storehouse_info sn ON gsi.gs_storehouse_id = sn.storehouse_id
+
+        LEFT JOIN good_info gi ON gsi.gs_good_id = gi.good_id
+
+        where 1=1
+
+        <if test="gsStorehouseId != null and gsStorehouseId != '' ">
+            AND gs_storehouse_id = #{gsStorehouseId}
+        </if>
+
+        <if test="goodSystemChname != null and goodSystemChname != '' ">
+            AND good_system_chname = #{goodSystemChname}
+        </if>
+
+        <if test="goodSystemSku != null and goodSystemSku != '' ">
+            AND good_system_sku = #{goodSystemSku}
+        </if>
+
+        <if test="goodSellType != null and goodSellType != '' ">
+            AND good_sell_type = #{goodSellType}
+        </if>
+
+        ORDER BY
+
+        <choose>
+            <when test="(gsCreateTimePX == null or gsCreateTimePX == '') and (gsUpdTimePX == null or gsUpdTimepX == '') and (gsGoodSkuPX == null or gsGoodSkuPX == '') and (gsAllNumberPX == null or gsAllNumberPX == '')">
+                gsi.gs_create_time DESC
+            </when>
+
+            <!-- 按照创建时间排序 1：升序 2：降序 -->
+
+            <when test="gsCreateTimePX == 2 ">
+                gsi.gs_create_time DESC
+            </when>
+
+            <when test="gsCreateTimePX == 1 ">
+                gsi.gs_create_time ASC
+            </when>
+
+            <!-- 按照更新时间排序 1：升序 2：降序 -->
+
+            <when test="gsUpdTimePX == 2 ">
+                gsi.gs_upd_time DESC
+            </when>
+
+            <when test="gsUpdTimePX == 1 ">
+                gsi.gs_upd_time ASC
+            </when>
+
+            <!-- 按照商品sku排序 1：升序 2：降序 -->
+
+            <when test="gsGoodSkuPX == 2 ">
+                gi.good_system_sku DESC
+            </when>
+
+            <when test="gsGoodSkuPX == 1 ">
+                gi.good_system_sku ASC
+            </when>
+
+            <!-- 按照商品库存量排序 1：升序 2：降序 -->
+
+            <when test="gsAllNumberPX == 2 ">
+                gsi.gs_all_number DESC
+            </when>
+
+            <when test="gsAllNumberPX == 1 ">
+                gsi.gs_all_number ASC
+            </when>
+
+        </choose>
+
+
+    </select>
+
+
+    <update id="updGoodStorehouseInfo" parameterType="com.commerceerp.system.entity.GoodStorehouseInfo">
+
+        UPDATE good_storehouse_info set
+
+        <set>
+        <if test="gsAllNumber != null">
+            gs_all_number = #{gsAllNumber,jdbcType=INTEGER},
+        </if>
+        <if test="gsGoodPrice != null">
+            gs_good_price = #{gsGoodPrice,jdbcType=DOUBLE},
+        </if>
+        <if test="gsRemark != null">
+            gs_remark = #{gsRemark,jdbcType=VARCHAR},
+        </if>
+        <if test="gsUpdTime != null">
+            gs_upd_time = #{gsUpdTime,jdbcType=VARCHAR},
+        </if>
+
+        </set>
+
+        WHERE gs_id = #{gsId,jdbcType=VARCHAR}
+
+    </update>
+
+
+</mapper>
